@@ -4,6 +4,7 @@ import collections
 import glob
 import json
 import sys
+from to_json import *
 from util import *
 from leaderskill import parse_leader_skill
 from braveburst import parse_skill
@@ -35,13 +36,17 @@ def parse_unit(unit, skills, bbs, leader_skills, ais, dictionary):
                    (UNIT_LORD_REC, 'lord rec', int),
                    (DMG_FRAME, 'hits', hits),
                    (DMG_FRAME, 'hit dmg% distribution', hit_dmg_dist),
+                   (DMG_FRAME, 'hit dmg% distribution (total)', hit_dmg_dist_total),
                    (DROP_CHECK_CNT, 'max bc generated', max_bc_gen),
                    (UNIT_LORD_ATK, 'lord damage range', _damage_range),
                    (UNIT_AI_ID, 'ai', ais.get),
                    (UNIT_IMP, 'imp', lambda s: parse_imps(s.split(':'))),
                    (BB_ID, 'bb', _parse_skill, not_zero),
                    (SBB_ID, 'sbb', _parse_skill, not_zero),
-                   (LS_ID, 'leader skill', parse_ls, not_zero))
+                   (LS_ID, 'leader skill', parse_ls, not_zero),
+                   (UNIT_ID, 'id', int),
+                   (UNIT_GUIDE_ID, 'guide_id', int),
+                   (UNIT_EXP_PATTERN_ID, 'exp_pattern', int))
 
     return handle_format(unit_format, unit)
 
@@ -95,7 +100,20 @@ if __name__ == '__main__':
     for unit in jsons['unit']:
         unit_data = parse_unit(unit, skills, skill_levels, leader_skills,
                                ais, jsons['dict'])
+        unit_data['hit dmg% distribution'] = NoIndent(unit_data['hit dmg% distribution'])
+        if unit_data['name'] in units_data:
+          unit_data['name'] += ' (' + str(unit_data['rarity']) + '*)'
         units_data[unit_data['name']] = unit_data
         unit_data.pop('name')
 
-    print json.dumps(units_data)
+    if 'jp' in sys.argv:
+        print json.dumps(units_data, 
+                         sort_keys=True, 
+                         indent=4, 
+                         cls=IndentlessEncoder, 
+                         ensure_ascii=False).encode('utf8').replace('"[', '[').replace(']"', ']')
+    else:
+        print json.dumps(units_data, 
+                         sort_keys=True, 
+                         indent=4, 
+                         cls=IndentlessEncoder).replace('"[', '[').replace(']"', ']')

@@ -3,21 +3,23 @@
 import json
 import glob
 import sys
+import collections
 from util import *
 from leaderskill import parse_ls_process
 from items import *
 
-
 def parse_item_effect(item, data):
     effects = dict()
-    for process_type, process_info in zip(item[PROCESS_TYPE].split('@'),
+    effects['effect'] = []
+    for process_type, process_info in zip(item[PROCESS_TYPE].split('@'), 
                                           item[ITEM_PROCESS].split('@')):
-        effects.update(parse_item_process(process_type, process_info))
+        #effects.update(parse_item_process(process_type, process_info))
+        effects['effect'].append(parse_item_process(process_type, process_info))
     if item[ITEM_TARGET_TYPE] == '2':
         effects['target_type'] = 'enemy'
     else:
         effects['target_type'] = 'self'
-    if item[ITEM_TARGET_TYPE] == '1':
+    if item[ITEM_TARGET_AREA] == '1':
         effects['target_area'] = 'single'
     else:
         effects['target_area'] = 'aoe'
@@ -25,10 +27,12 @@ def parse_item_effect(item, data):
 
 
 def parse_sphere_effect(item, data, dictionary):
-    effects = dict()
-    for process_type, process_info in zip(item[PROCESS_TYPE].split('@'),
+    #effects = dict()
+    effects = []
+    for process_type, process_info in zip(item[PROCESS_TYPE].split('@'), 
                                           item[ITEM_PROCESS].split('@')):
-        effects.update(parse_ls_process(process_type, process_info))
+        #effects.update(parse_ls_process(process_type, process_info))
+        effects.append(parse_ls_process(process_type, process_info))
     return effects
 
 
@@ -62,6 +66,7 @@ def parse_item(item, dictionary):
                    (parse_type))
 
     return handle_format(item_format, item)
+
 
 if __name__ == '__main__':
     _dir = 'data/decoded_dat/'
@@ -101,4 +106,7 @@ if __name__ == '__main__':
         items_data[item_data['name']] = item_data
         item_data.pop('name')
 
-    print json.dumps(items_data)
+    if 'jp' in sys.argv:
+        print json.dumps(items_data, sort_keys=True, indent=4, ensure_ascii=False).encode('utf8')
+    else:
+        print json.dumps(items_data, sort_keys=True, indent=4)

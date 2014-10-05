@@ -1,3 +1,5 @@
+from to_json import *
+
 UNIT_NAME = 'utP1c0CD'
 UNIT_ELEMENT = 'iNy0ZU5M'
 UNIT_RARITY = '7ofj5xa1'
@@ -10,6 +12,9 @@ UNIT_LORD_DEF = '32INDST4'
 UNIT_BASE_REC = '92ij6UGB'
 UNIT_LORD_REC = 'X9P3AN5d'
 UNIT_IMP = 'imQJdg64'
+UNIT_ID = 'pn16CNah'
+UNIT_GUIDE_ID = 'XuJL4pc5'
+UNIT_EXP_PATTERN_ID = '5UvTp7q1'
 UNIT_AI_ID = 'i74vGUFa'
 DMG_FRAME = '6Aou5M9r'
 DROP_CHECK_CNT = 'n9h7p02P'
@@ -17,6 +22,7 @@ BB_ID = 'nj9Lw7mV'
 SBB_ID = 'iEFZ6H19'
 BB_NAME = '0nxpBDz2'
 SKILL_LEVELS_PROCESSES = 'Kn51uR4Y'
+SKILL_START_FRAME = 'qYCx73y2'
 LS_ID = 'oS3kTZ2W'
 LS_NAME = 'dJPf9a5v'
 LS_PROCESS = '2Smu5Mtq'
@@ -44,6 +50,13 @@ ITEM_TARGET_TYPE = 'moWQ30GH'
 ITEM_TARGET_AREA = '6E2fGPWT'
 ITEM_TYPE = 'h0K7wjeH'
 
+item_types = {
+    '0': 'other',
+    '1': 'consumable',
+    '2': 'material',
+    '3': 'sphere'
+}
+
 elements = {
     '0': 'all',
     '1': 'fire',
@@ -61,13 +74,6 @@ ailments = {
     '4': 'injury%',
     '5': 'curse%',
     '6': 'paralysis%'
-}
-
-item_types = {
-    '0': 'other',
-    '1': 'consumable',
-    '2': 'material',
-    '3': 'sphere'
 }
 
 
@@ -96,6 +102,8 @@ def dmg_str(limits):
 
 
 def not_zero(a):
+    if len(a) == 0:
+        return False
     return int(a) != 0
 
 
@@ -108,7 +116,15 @@ def hits(atk_frames):
 
 
 def hit_dmg_dist(atk_frames):
+    if atk_frames == '0':
+        return []
     return [int(hit.split(':')[1]) for hit in atk_frames.split(',')]
+
+
+def hit_dmg_dist_total(atk_frames):
+    if atk_frames == '0':
+        return 0
+    return sum([int(hit.split(':')[1]) for hit in atk_frames.split(',')])
 
 
 def parse_imps(args):
