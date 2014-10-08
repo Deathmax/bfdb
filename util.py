@@ -11,6 +11,7 @@ UNIT_BASE_DEF = 'q78KoWsg'
 UNIT_LORD_DEF = '32INDST4'
 UNIT_BASE_REC = '92ij6UGB'
 UNIT_LORD_REC = 'X9P3AN5d'
+UNIT_MAX_LEVEL = 'EI1DF8Yt'
 UNIT_IMP = 'imQJdg64'
 UNIT_ID = 'pn16CNah'
 UNIT_GUIDE_ID = 'XuJL4pc5'
@@ -74,6 +75,13 @@ ailments = {
     '4': 'injury%',
     '5': 'curse%',
     '6': 'paralysis%'
+}
+
+attribute = {
+    '1': 'attack',
+    '2': 'defense',
+    '3': 'recovery',
+    '4': 'hp'
 }
 
 

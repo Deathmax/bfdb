@@ -43,6 +43,8 @@ skill_level_process_format = {
            ([2, 3], ailments.get, second_int, not_zero),
            ([4, 5], ailments.get, second_int, not_zero),
            ([6, 7], ailments.get, second_int, not_zero)),
+    
+    '12': ((0, 'revive to hp%', int),),
 
     '13': ((0, 'random attack', True),
            (0, 'bb atk%', int, not_zero),
@@ -80,6 +82,11 @@ skill_level_process_format = {
     '23': ((0, 'spark dmg% buff', int),
            (6, 'buff turns', int)),
 
+    '24': ((1, 'atk% buff', int, not_zero),
+           (2, 'def% buff', int, not_zero),
+           (3, 'rec% buff', int, not_zero),
+           (4, '% converted turns', int)),
+
     '29': (([0, 1, 2], 'bb elements',
             lambda x, y, z: map(elements.get, filter(not_zero, [x, y, z]))),
            (3, 'bb atk%', int, not_zero),
@@ -93,7 +100,13 @@ skill_level_process_format = {
             lambda x, y, z: map(elements.get, filter(not_zero, [x, y, z]))),
            (6, 'elements added turns', int)),
 
-    '31': ((0, 'increase bb gauge', bb_gauge),)
+    '31': ((0, 'increase bb gauge', bb_gauge),),
+
+    '902': ((0, 'atk% buff', int, not_zero),
+            (1, 'def% buff', int, not_zero),
+            (2, 'rec% buff', int, not_zero),
+            (3, 'crit% buff', int, not_zero),
+            (5, 'buff turns (GUESSED)', int)),
 }
 
 

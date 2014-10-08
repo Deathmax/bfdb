@@ -23,17 +23,67 @@ def parse_unit(unit, skills, bbs, leader_skills, ais, dictionary):
     def parse_ls(ls_id, data):
         return parse_leader_skill(data, leader_skills[ls_id], dictionary)
 
+    def get_stats(process_info):
+        data = dict()
+        max_level = int(process_info[UNIT_MAX_LEVEL]) - 1
+        data['base'] = {
+            'hp': int(process_info[UNIT_BASE_HP]),
+            'atk': int(process_info[UNIT_BASE_ATK]),
+            'def': int(process_info[UNIT_BASE_DEF]),
+            'rec': int(process_info[UNIT_BASE_REC])
+        }
+        data['lord'] = {
+            'hp': int(process_info[UNIT_LORD_HP]),
+            'atk': int(process_info[UNIT_LORD_ATK]),
+            'def': int(process_info[UNIT_LORD_DEF]),
+            'rec': int(process_info[UNIT_LORD_REC])
+        }
+        data['anima'] = {
+            'hp min': int(process_info[UNIT_LORD_HP]) + max_level*5,
+            'hp max': int(process_info[UNIT_LORD_HP]) + max_level*10,
+            'rec min': int(process_info[UNIT_LORD_REC]) - max_level*3,
+            'rec max': int(process_info[UNIT_LORD_REC]) - max_level*1,
+            'atk': int(process_info[UNIT_BASE_ATK]),
+            'def': int(process_info[UNIT_BASE_DEF]),
+        }
+        data['breaker'] = {
+            'atk min': int(process_info[UNIT_LORD_ATK]) + max_level*1,
+            'atk max': int(process_info[UNIT_LORD_ATK]) + max_level*3,
+            'def min': int(process_info[UNIT_LORD_DEF]) - max_level*3,
+            'def max': int(process_info[UNIT_LORD_DEF]) - max_level*1,
+            'hp': int(process_info[UNIT_BASE_HP]),
+            'rec': int(process_info[UNIT_BASE_REC])
+        }
+        data['guardian'] = {
+            'atk min': int(process_info[UNIT_LORD_ATK]) - max_level*3,
+            'atk max': int(process_info[UNIT_LORD_ATK]) - max_level*1,
+            'def min': int(process_info[UNIT_LORD_DEF]) + max_level*1,
+            'hp': int(process_info[UNIT_BASE_HP]),
+            'rec': int(process_info[UNIT_BASE_REC]),
+            'def max': int(process_info[UNIT_LORD_DEF]) + max_level*3,
+        }
+        data['oracle'] = {
+            'hp min': int(process_info[UNIT_LORD_HP]) - max_level*4,
+            'hp max': int(process_info[UNIT_LORD_HP]) - max_level*2,
+            'rec min': int(process_info[UNIT_LORD_REC]) + max_level*2,
+            'rec max': int(process_info[UNIT_LORD_REC]) + max_level*4,
+            'atk': int(process_info[UNIT_BASE_ATK]),
+            'def': int(process_info[UNIT_BASE_DEF]),
+        }
+        return {'stats': data}
+
     unit_format = ((UNIT_NAME, 'name', get_dict_str(dictionary)),
                    (UNIT_ELEMENT, 'element', elements.get),
                    (UNIT_RARITY, 'rarity', int),
-                   (UNIT_BASE_HP, 'base hp', int),
-                   (UNIT_LORD_HP, 'lord hp', int),
-                   (UNIT_BASE_ATK, 'base atk', int),
-                   (UNIT_LORD_ATK, 'lord atk', int),
-                   (UNIT_BASE_DEF, 'base def', int),
-                   (UNIT_LORD_DEF, 'lord def', int),
-                   (UNIT_BASE_REC, 'base rec', int),
-                   (UNIT_LORD_REC, 'lord rec', int),
+                   #(UNIT_BASE_HP, 'base hp', int),
+                   #(UNIT_LORD_HP, 'lord hp', int),
+                   #(UNIT_BASE_ATK, 'base atk', int),
+                   #(UNIT_LORD_ATK, 'lord atk', int),
+                   #(UNIT_BASE_DEF, 'base def', int),
+                   #(UNIT_LORD_DEF, 'lord def', int),
+                   #(UNIT_BASE_REC, 'base rec', int),
+                   #(UNIT_LORD_REC, 'lord rec', int),
+                   (get_stats),
                    (DMG_FRAME, 'hits', hits),
                    (DMG_FRAME, 'hit dmg% distribution', hit_dmg_dist),
                    (DMG_FRAME, 'hit dmg% distribution (total)', hit_dmg_dist_total),

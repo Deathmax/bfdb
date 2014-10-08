@@ -76,6 +76,13 @@ ls_process_format = {
     '14': ((0, 'dmg reduction%', int),
            (1, 'dmg reduction chance%', int)),
 
+    '15': ((0, 'hp% recover on enemy defeat low', int),
+           (1, 'hp% recover on enemy defeat high', int),
+           (3, 'hp% recover on enemy defeat chance%', int)),
+
+    '16': ((0, 'hp% recover on battle win low', int),
+           (1, 'hp% recover on battle win high', int),),
+
     '17': ((0, 'hp drain% low', int),
            (1, 'hp drain% high', int),
            (2, 'hp drain chance%', int)),
@@ -100,9 +107,17 @@ ls_process_format = {
     '23': ((0, 'battle end bc fill low', bb_gauge),
            (1, 'battle end bc fill high', bb_gauge)),
 
+    '24': ((0, 'dmg% to hp% when attacked low', int),
+           (1, 'dmg% to hp% when attacked high', int),
+           (2, 'dmg% to hp% when attacked chance%', int)),
+
     '25': ((0, 'bc fill when attacked low', bb_gauge),
            (1, 'bc fill when attacked high', bb_gauge),
            (2, 'bc fill when attacked%', int)),
+
+    '26': ((0, 'dmg% reflect low', int),
+           (1, 'dmg% reflect high', int),
+           (3, 'dmg% reflect chance%', int)),
 
     '27': ((0, 'target% chance', int),),
     
@@ -127,6 +142,10 @@ ls_process_format = {
            (5, 'karma drop% for spark', int, not_zero)),
 
     '32': ((0, 'bb gauge fill rate%', int),),
+
+    '33': ((0, 'turn heal low', int),
+           (1, 'turn heal high', int),
+           (2, 'rec% added (turn heal)', lambda x: (1 + float(x) / 100) * 10)),
 
     '34': ((0, 'dmg% for crits', crit_elem_weakness),),
 
