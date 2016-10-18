@@ -21,8 +21,8 @@ item_process_format = {
 }
 
 
-def parse_item_process(process_type, process_info):
+def parse_item_process(process_type, process_info, debug=False):
     if process_type in item_process_format:
         return handle_format(item_process_format[process_type],
                              process_info.split(','))
-    return parse_skill_level_process(process_type, process_info)
+    return parse_skill_level_process(process_type, process_info, debug)

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from to_json import *
 
 UNIT_NAME = 'utP1c0CD'
@@ -17,13 +20,25 @@ UNIT_ID = 'pn16CNah'
 UNIT_GUIDE_ID = 'XuJL4pc5'
 UNIT_EXP_PATTERN_ID = '5UvTp7q1'
 UNIT_AI_ID = 'i74vGUFa'
+UNIT_COST = 'gvT2ds0Q'
+UNIT_OD_STATS = '5SUvj4tM'
+UNIT_GENDER = '9i2xhMaJ'
+UNIT_GETTING_TYPE = '6yHMXYv1'
+UNIT_CATEGORY = '9PsmH7tz'
+UNIT_KIND = 'xP9oi5Z2'
+UNIT_ATTACK_MOVE_TYPE = 'mv4o39Uz'
+UNIT_SKILL_MOVE_TYPE = 'XE7Yi5c3'
+UNIT_MOVE_SPEED = 'J2hPXGo5'
+SELL_CAUTION = 'y4jAZ9nI'
 DMG_FRAME = '6Aou5M9r'
 DROP_CHECK_CNT = 'n9h7p02P'
 BB_ID = 'nj9Lw7mV'
 SBB_ID = 'iEFZ6H19'
+UBB_ID = 'cb0P4mp1'
 BB_NAME = '0nxpBDz2'
 SKILL_LEVELS_PROCESSES = 'Kn51uR4Y'
 SKILL_START_FRAME = 'qYCx73y2'
+SKILL_TARGET_AREA = 'IZt73kLG'
 LS_ID = 'oS3kTZ2W'
 LS_NAME = 'dJPf9a5v'
 LS_PROCESS = '2Smu5Mtq'
@@ -31,9 +46,16 @@ PROCESS_TYPE = 'hjAy9St3'
 DESC = 'qp37xTDh'
 AI_ID = '4eEVw5hL'
 AI_CHANCE = 'ug9xV4Fz'
-AI_TARGET = 'VBj9u0ot'
+AI_TARGET_CONDITIONS = 'VBj9u0ot'
+AI_TARGET_TYPE = '4xctV8gF'
 AI_ACTION_PARAMS = 'Hhgi79M1'
 AI_NAME = 'L8PCsu0K'
+
+ES_ID = 'cP83zNsv'
+ES_NAME = '0nxpBDz2'
+ES_TERM_PARAMS = 's2gM3deu'
+ES_DESC = 'qp37xTDh'
+ES_TARGET = 'moWQ30GH'
 
 REQ_HEADER_TAG = 'F4q6i9xe'
 REQ_ID = 'Hhgi79M1'
@@ -41,6 +63,9 @@ REQ_BODY_TAG = 'a3vSYuq2'
 REQ_BODY = 'Kn51uR4Y'
 
 ITEM_NAME = 'c7Z6xDB2'
+ITEM_SHORTNAME = 'kP3zJ9Ra'
+ITEM_RAIDFLG = 'ZKQ1X69a'
+ITEM_RAIDUSAGETYPE = 'PEhNd0B4'
 ITEM_RARITY = '7ofj5xa1'
 ITEM_SELL_PRICE = 'eKtE6k0n'
 ITEM_MAX_STACK = 'm9gd5h1u'
@@ -50,6 +75,29 @@ ITEM_PROCESS = '2Smu5Mtq'
 ITEM_TARGET_TYPE = 'moWQ30GH'
 ITEM_TARGET_AREA = '6E2fGPWT'
 ITEM_TYPE = 'h0K7wjeH'
+ITEM_THUMB = 'Mt3Y0bo5'
+ITEM_KIND = '92udyUrJ'
+
+RECIPE_ITEM_ID = 'kixHbe54'
+RECIPE_MATERIALS = '75YV2q1i'
+RECIPE_KARMA = 'HTVh8a65'
+
+UNITTYPE_ID = 'nBTx56W9'
+UNITTYPE_HP = '76IHLVsz'
+UNITTYPE_ATK = '2M4mQZgk'
+UNITTYPE_DEF = 'Sj9zR38K'
+UNITTYPE_REC = '6D3YN9rc'
+
+FE_ID = 'ri6D9yBi'
+FE_NAME = 'yRlCNyvk'
+FE_SERIES = '9PsmH7tz'
+FE_LEVEL = 'D9wXQI2V'
+FE_NEED_BP = 'G5wFDad6'
+FE_CAT_ID = 'VgU78CYj'
+FE_CAT_NAME = 'XLSB42ED'
+FE_TERM_SKILL = 'FHThxDv4'
+FE_TERM_COMMENT = '7XYkj2EU'
+FE_EFFECT_TYPE = 'jeR2rN3V'
 
 item_types = {
     '0': 'other',
@@ -65,7 +113,9 @@ elements = {
     '3': 'earth',
     '4': 'thunder',
     '5': 'light',
-    '6': 'dark'
+    '6': 'dark',
+    u'闇': 'dark',
+    '闇': 'dark'
 }
 
 ailments = {
@@ -74,7 +124,10 @@ ailments = {
     '3': 'sick%',
     '4': 'injury%',
     '5': 'curse%',
-    '6': 'paralysis%'
+    '6': 'paralysis%',
+    '7': 'atk down',
+    '8': 'def down',
+    '9': 'rec down',
 }
 
 attribute = {
@@ -84,6 +137,167 @@ attribute = {
     '4': 'hp'
 }
 
+item_kinds = {
+    '0': 'Other',
+    '1': 'Status Boost',
+    '2': 'Critical',
+    '3': 'Drop',
+    '4': 'Status Ailment',
+    '5': 'Status Ailments Resistant',
+    '6': 'BB Gauge',
+    '7': 'HP Recovery',
+    '8': 'Expose Target',
+    '9': 'Damage Reflecting',
+    '10': 'Damage Reducing',
+    '11': 'Spark',
+    '12': 'Defense Penetrating',
+    '13': 'Atk Boosting',
+    '14': 'Special'
+}
+
+
+target_type_names = {
+    '1': 'party',
+    '2': 'enemy',
+    '3': 'self'
+}
+
+target_area_names = {
+    '1': 'single',
+    '2': 'aoe'
+}
+
+gender = {
+    '0': 'other',
+    '1': 'male',
+    '2': 'female'
+}
+
+caution = {
+    '0': False,
+    '1': True,
+}
+
+bool_str = {
+    '0': False,
+    '1': True,
+}
+
+move_types = {
+    '1': 'normal',
+    '2': 'other',
+    '3': 'no move'
+}
+
+buff_lookup = {
+    '1': 'atk% buff',
+    '2': 'atk% buff',
+    '3': 'def% buff',
+    '4': 'def% buff',
+    '5': 'rec% buff',
+    '7': 'crit% buff',
+    '8': 'gradual heal turns',
+    '9': 'hc drop rate% buff',
+    '10': 'bc drop rate% buff',
+    '11': 'item drop rate% buff',
+    '12': 'angel idol effect',
+    #fire
+    '13': 'atk% buff',
+    '14': 'def% buff',
+    '15': 'rec% buff',
+    #water
+    '16': 'atk% buff',
+    '17': 'def% buff',
+    '18': 'rec% buff',
+    #earth
+    '19': 'atk% buff',
+    '20': 'def% buff',
+    '21': 'rec% buff',
+    #thunder
+    '22': 'atk% buff',
+    '23': 'def% buff',
+    '24': 'rec% buff',
+    #light
+    '25': 'atk% buff',
+    '26': 'def% buff',
+    '27': 'rec% buff',
+    #dark
+    '28': 'atk% buff',
+    '29': 'def% buff',
+    '30': 'rec% buff',
+    '36': 'dmg% reduction',
+    '37': 'increase bb gauge gradual',
+    '38': 'bc fill when attacked',
+    '39': 'defense% ignore',
+    '40': 'spark dmg% buff',
+    '46': 'atk% buff',
+    '47': 'def% buff',
+    '50': 'hit increase buff',
+    '71': 'dot',
+    '72': 'bb atk% buff'
+}
+
+get_type = {
+    '1': 'farmable',
+    '2': 'rare summon',
+    '3': 'not eligible for achievement'
+}
+
+unit_kind = {
+    '0': 'normal',
+    '1': 'evo',
+    '2': 'enhancing',
+    '3': 'sale'
+}
+
+unit_type = {
+    '1': 'lord',
+    '2': 'anima',
+    '3': 'breaker',
+    '4': 'guardian',
+    '5': 'oracle',
+    '6': 'rex'
+}
+
+move_speed_1 = {
+    '0': 0.002,
+    '1': 0.005,
+    '2': 0.0041,
+    '3': 0.0033,
+    '4': 0.0024,
+    '5': 0.0015
+}
+
+move_speed_other = {
+    '0': 0,
+    '1': 8,
+    '2': 6,
+    '3': 4,
+    '4': 2,
+    '5': 0
+}
+
+move_speed = {
+    '1': move_speed_1,      #move
+    '2': move_speed_other,  #teleport
+    '3': move_speed_other   #no move, speed correspond to no. of frames waiting in move
+}
+
+animation_type = {
+    '1': 'idle',
+    '2': 'move',
+    '3': 'attack',
+    '4': 'altattack'
+}
+
+passive_target = {
+    '1': 'self',
+    '2': 'party'
+}
+
+def crit_elem_weakness(x):
+    return float(x)*100
+
 
 def damage_range(atk):
     return (int((atk * 0.9) + (atk / 32)),
@@ -91,6 +305,7 @@ def damage_range(atk):
 
 
 def damage_range_bb(unit, skill, bb_level):
+    #bb_level = bb_levels[-1]
     total_atk = unit['lord atk']
     modifier = bb_level['bb atk%']
     modifier += bb_level.get('atk% buff', 0)
@@ -110,9 +325,22 @@ def dmg_str(limits):
 
 
 def not_zero(a):
+    if a == None:
+        return False
     if len(a) == 0:
         return False
-    return int(a) != 0
+    try:
+        return int(a) != 0
+    except:
+        return False
+
+
+def not_empty(a):
+    if a == None:
+        return False
+    if len(a) == 0:
+        return False
+    return True
 
 
 def bb_gauge(a):
@@ -126,13 +354,19 @@ def hits(atk_frames):
 def hit_dmg_dist(atk_frames):
     if atk_frames == '0':
         return []
-    return [int(hit.split(':')[1]) for hit in atk_frames.split(',')]
+    return [intTryParse(hit.split(':')[1]) for hit in atk_frames.split(',')]
+
+
+def frame_time_dist(atk_frames):
+    if atk_frames == '0':
+        return []
+    return [intTryParse(hit.split(':')[0]) for hit in atk_frames.split(',')]
 
 
 def hit_dmg_dist_total(atk_frames):
     if atk_frames == '0':
         return 0
-    return sum([int(hit.split(':')[1]) for hit in atk_frames.split(',')])
+    return sum([intTryParseZero(hit.split(':')[1]) for hit in atk_frames.split(',')])
 
 
 def parse_imps(args):
@@ -146,8 +380,88 @@ def second_int(_, a):
     return int(a)
 
 
+def intTryParse(value):
+    try:
+        return int(value)
+    except ValueError:
+        return value
+
+
+def intTryParseZero(value):
+    try:
+        return int(value)
+    except ValueError:
+        return 0
+
+
 def get_dict_str(dictionary):
     return lambda s: dictionary.get(s, s)
+
+
+def get_unit_name(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_UNIT_' + id + '_NAME', s)
+
+
+def get_skill_name(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_SKILLS_' + id + '_NAME', s)
+
+
+def get_skill_desc(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_SKILLS_' + id + '_DESCRIPTION', s)
+
+
+def get_es_name(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_EXTRAPASSIVESKILL_' + id + '_NAME', s)
+
+
+def get_es_desc(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_EXTRAPASSIVESKILL_' + id + '_DESCRIPTION', s)
+
+
+def get_ls_name(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_LEADERSKILLS_' + id + '_NAME', s)
+
+
+def get_ls_desc(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_LEADERSKILLS_' + id + '_DESCRIPTION', s)
+
+
+def get_fe_name(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_FE_SKILLS_' + id + '_NAME', s)
+
+
+def get_fe_desc(dictionary, id, jp=True):
+    return lambda s: dictionary.get(s, s) if (jp or id == None) else dictionary.get('MST_FE_SKILLS_' + id + '_DESC', s)
+
+
+def get_item_name(dictionary, id, s, jp=True):
+    if jp:
+        return dictionary.get(s, s)
+    else:
+        if 'MST_ITEMS_MATERIAL_' + id + '_NAME' in dictionary:
+            return dictionary['MST_ITEMS_MATERIAL_' + id + '_NAME']
+        if 'MST_ITEMS_BATTLEITEMS_' + id + '_NAME' in dictionary:
+            return dictionary['MST_ITEMS_BATTLEITEMS_' + id + '_NAME']
+        if 'MST_SPHERES_' + id + '_NAME' in dictionary:
+            return dictionary['MST_SPHERES_' + id + '_NAME']
+        if 'MST_EVOITEM_' + id + '_NAME' in dictionary:
+            return dictionary['MST_EVOITEM_' + id + '_NAME']
+        return s
+
+
+def get_item_desc(dictionary, id, s, jp=True):
+    if jp:
+        return dictionary.get(s, s)
+    else:
+        if 'MST_ITEMS_MATERIAL_' + id + '_SHORTDESCRIPTION' in dictionary:
+            return dictionary['MST_ITEMS_MATERIAL_' + id + '_SHORTDESCRIPTION']
+        if 'MST_ITEMS_BATTLEITEMS_' + id + '_SHORTDESCRIPTION' in dictionary:
+            return dictionary['MST_ITEMS_BATTLEITEMS_' + id + '_SHORTDESCRIPTION']
+        if 'MST_SPHERES_' + id + '_SHORTDESCRIPTION' in dictionary:
+            return dictionary['MST_SPHERES_' + id + '_SHORTDESCRIPTION']
+        if 'MST_EVOITEM_' + id + '_SHORTDESCRIPTION' in dictionary:
+            return dictionary['MST_EVOITEM_' + id + '_SHORTDESCRIPTION']
+        return s
 
 
 def handle_format(fmt, obj):
