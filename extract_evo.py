@@ -96,12 +96,12 @@ def parse_evo(evo, units, items, dictionary):
     idx = 0
     if EVO_MAT_IDS[0] in evo:
         for mat_id in EVO_MAT_IDS:
-            if int(evo[mat_id]) != 0:
+            if evo[mat_id] != None and int(evo[mat_id]) != 0:
                 mat_unit = units.get(evo[mat_id], {'name': evo[mat_id], 'id': evo[mat_id]})
                 data['mats'].append({'name': mat_unit['name'], 'id': mat_unit['id']})
     else:
         for mat_id in EVO_JP_MAT_IDS:
-            if mat_id in evo and int(evo[mat_id]) != 0:
+            if mat_id in evo and evo[mat_id] != None and int(evo[mat_id]) != 0:
                 mat_unit = {}
                 if int(evo[EVO_JP_MAT_TYPES[idx]]) == 1:
                     mat_unit = units.get(evo[mat_id], {'name': evo[mat_id], 'id': evo[mat_id], 'type': 'unit'})
