@@ -48,7 +48,8 @@ def parse_fe_skill(unit_data, leader_skill, dictionary, jp=True, debug=False, id
       data['id'] = id
     data['desc'] = get_fe_desc(dictionary, id, jp)(leader_skill[DESC])
     data['effects'] = []
-    data['series'] = leader_skill[FE_SERIES]
+    # workaround for EU, EU is missing the series key
+    data['series'] = leader_skill.get(FE_SERIES, '')
     data['level'] = int(leader_skill[FE_LEVEL])
     data['bp'] = int(leader_skill[FE_NEED_BP])
 
