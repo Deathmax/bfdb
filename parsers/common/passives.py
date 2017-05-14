@@ -1,6 +1,6 @@
 import sys
-from util import *
-from braveburst import parse_skill_level_processes
+from utils.util import *
+from parsers.common.skills import parse_skill_level_processes
 
 
 def parse_elements_buffed(process_info):
@@ -21,14 +21,18 @@ def parse_stat_buff_proportion_process(process_info):
 
     if int(process_info[0]) != 0 or int(process_info[1]) != 0:
         buffs['atk% base buff'] = int(process_info[0])
-        buffs['atk% extra buff based on hp'] = int(process_info[1]) - int(process_info[0])
+        buffs['atk% extra buff based on hp'] = int(
+            process_info[1]) - int(process_info[0])
     if int(process_info[2]) != 0 or int(process_info[3]) != 0:
         buffs['def% base buff'] = int(process_info[2])
-        buffs['def% extra buff based on hp'] = int(process_info[3]) - int(process_info[2])
+        buffs['def% extra buff based on hp'] = int(
+            process_info[3]) - int(process_info[2])
     if int(process_info[4]) != 0 or int(process_info[5]) != 0:
         buffs['rec% base buff'] = int(process_info[4])
-        buffs['rec% extra buff based on hp'] = int(process_info[5]) - int(process_info[4])
-    buffs['buff proportional to hp'] = ('lost' if int(process_info[6]) == 1 else 'remaining')
+        buffs['rec% extra buff based on hp'] = int(
+            process_info[5]) - int(process_info[4])
+    buffs['buff proportional to hp'] = (
+        'lost' if int(process_info[6]) == 1 else 'remaining')
     return buffs
 
 
@@ -36,8 +40,9 @@ def parse_damage_buff_on_ailment(process_info):
     rtn = {}
 
     for ailmentId in process_info[0].split('&'):
-      if ailmentId != '0':
-        rtn['atk% buff when enemy has ' + ailments.get(ailmentId, ailmentId).rstrip('%')] = True
+        if ailmentId != '0':
+            rtn['atk% buff when enemy has ' +
+                ailments.get(ailmentId, ailmentId).rstrip('%')] = True
 
     rtn['atk% buff when enemy has ailment'] = int(process_info[1])
 
@@ -47,7 +52,8 @@ def parse_damage_buff_on_ailment(process_info):
 def get_passive_param(proc_type, params, turns=0):
     rtn = {}
     if proc_type in passivebuff_process_format:
-        rtn.update(handle_format(passivebuff_process_format[proc_type], params.split('&')))
+        rtn.update(handle_format(
+            passivebuff_process_format[proc_type], params.split('&')))
     else:
         rtn.update({'unknown buff id': proc_type,
                     'unknown buff params': params})
@@ -56,8 +62,9 @@ def get_passive_param(proc_type, params, turns=0):
 
 
 def get_bb_passive(proc_id, proc_params, target_type, target_area, start_frame):
-    return parse_skill_level_processes(proc_id.split('~'), 
-                                       proc_params.replace('&', ',').split('~'), 
+    return parse_skill_level_processes(proc_id.split('~'),
+                                       proc_params.replace(
+                                           '&', ',').split('~'),
                                        start_frame.split('~'),
                                        target_type.split('~'),
                                        target_area.split('~'))
@@ -93,7 +100,7 @@ passivebuff_process_format = {
     '72': ((0, 'bb atk% buff', int, not_zero),
            (1, 'sbb atk% buff', int, not_zero),
            (2, 'ubb atk% buff', int, not_zero),),
-} 
+}
 
 ls_process_format = {
     '1': ((0, 'atk% buff', int, not_zero),
@@ -197,7 +204,7 @@ ls_process_format = {
            (2, 'dmg% reflect chance%', int)),
 
     '27': ((0, 'target% chance', int),),
-    
+
     '28': ((0, 'target% chance', int),
            ([2, 1], lambda s: 'hp %s %% passive requirement' %
             ('above' if int(s) == 1 else 'below'), second_int, not_zero)),
@@ -233,7 +240,7 @@ ls_process_format = {
     '36': ((0, 'additional actions', int),),
 
     '37': ((0, 'hit increase/hit', int),
-           (2, 'extra hits dmg%', int, not_zero)),  
+           (2, 'extra hits dmg%', int, not_zero)),
 
     '40': ((0, 'converted attribute', attribute.get),
            (1, 'atk% buff', int, not_zero),
@@ -257,10 +264,10 @@ ls_process_format = {
     '43': ((0, 'take 1 dmg%', int),),
 
     '44': ((0, 'atk buff', int, not_zero),
-          (1, 'def buff', int, not_zero),
-          (2, 'rec buff', int, not_zero),
-          (3, 'crit buff', int, not_zero),
-          (4, 'hp buff', int, not_zero)),
+           (1, 'def buff', int, not_zero),
+           (2, 'rec buff', int, not_zero),
+           (3, 'crit buff', int, not_zero),
+           (4, 'hp buff', int, not_zero)),
 
     '45': ((0, 'base crit% resist', int),
            (1, 'buff crit% resist', int)),
@@ -296,7 +303,7 @@ ls_process_format = {
            (2, 'hc base drop rate resist%', int, not_zero),
            (3, 'hc buffed drop rate resist%', int, not_zero),),
 
-    #mapping - skipped: not used atm
+    # mapping - skipped: not used atm
     '53': ((0, 'crit dmg base damage resist%', int, not_zero),
            (1, 'crit dmg buffed damage resist%', int, not_zero),
            (2, 'strong base element damage resist%', int, not_zero),
@@ -315,7 +322,7 @@ ls_process_format = {
            ([4, 3], lambda s: 'hp %s %% buff activation' %
             ('above' if int(s) == 1 else 'below'), second_int, not_zero),
            #(5, 'buff turns', int),
-           ),  #0 - buff id, 1 -
+           ),  # 0 - buff id, 1 -
 
     '58': ((0, 'guard increase mitigation%', int),),
 
@@ -392,14 +399,14 @@ ls_process_format = {
            (5, 'counter inflict paralysis%', int, not_zero)),
 
     '73': ((0, 'poison resist%', int, not_zero),
-          (1, 'weaken resist%', int, not_zero),
-          (2, 'sick resist%', int, not_zero),
-          (3, 'injury resist%', int, not_zero),
-          (4, 'curse resist%', int, not_zero),
-          (5, 'paralysis resist%', int, not_zero),
-          (6, 'atk down resist%', int, not_zero),
-          (7, 'def down resist%', int, not_zero),
-          (8, 'rec down resist%', int, not_zero),),
+           (1, 'weaken resist%', int, not_zero),
+           (2, 'sick resist%', int, not_zero),
+           (3, 'injury resist%', int, not_zero),
+           (4, 'curse resist%', int, not_zero),
+           (5, 'paralysis resist%', int, not_zero),
+           (6, 'atk down resist%', int, not_zero),
+           (7, 'def down resist%', int, not_zero),
+           (8, 'rec down resist%', int, not_zero),),
 
     '74': ((parse_damage_buff_on_ailment),),
 
@@ -410,11 +417,11 @@ ls_process_format = {
     '77': ((0, 'base spark dmg% resist', int),
            (1, 'buff spark dmg% resist', int)),
 
-#buff_id: 13
-#str_param: 1&150
-#unk: -1
-#judge: 10000
-#turns: 1
+    # buff_id: 13
+    # str_param: 1&150
+    # unk: -1
+    # judge: 10000
+    # turns: 1
 
     '78': (([0, 1, 4], 'buff', get_passive_param),
            #(0, 'buff type', buff_lookup.get),
@@ -515,7 +522,7 @@ ls_process_format = {
             (4, 'zel drop% for spark', int, not_zero),
             (5, 'karma drop% for spark', int, not_zero),
             ([7, 6], lambda s: 'hp %s %% buff requirement' %
-            ('above' if int(s) == 1 else 'below'), second_int, not_zero)),
+             ('above' if int(s) == 1 else 'below'), second_int, not_zero)),
 
     '105': ((0, 'atk% min buff', int, not_zero),
             (1, 'atk% max buff', int, not_zero),
@@ -523,7 +530,8 @@ ls_process_format = {
             (3, 'def% max buff', int, not_zero),
             (4, 'rec% min buff', int, not_zero),
             (5, 'rec% max buff', int, not_zero),
-            (6, lambda s: '%s from min to max' % ('increase' if int(s) == 1 else 'decrease'), int),
+            (6, lambda s: '%s from min to max' %
+             ('increase' if int(s) == 1 else 'decrease'), int),
             (7, 'turn count', int)),
 
     '10000': ((4, 'taunt turns', int),),
@@ -539,19 +547,19 @@ def parse_ls_process(process_type, process_info, debug=False):
         process_data['_debug params'] = process_info
     if process_type in ls_process_format:
         process_data.update(handle_format(ls_process_format[process_type],
-                             process_info.split(',')))
+                                          process_info.split(',')))
         process_data['passive id'] = process_type
         return process_data
     return {'unknown passive id': process_type,
             'unknown passive params': process_info}
 
 
-def parse_leader_skill(unit_data, leader_skill, dictionary, jp=True, debug=False, id=None):
+def parse_leader_skill(leader_skill, dictionary, jp=True, debug=False, id=None):
     data = dict()
 
     data['name'] = get_ls_name(dictionary, id, jp)(leader_skill[LS_NAME])
     if id != None:
-      data['id'] = id
+        data['id'] = id
     data['desc'] = get_ls_desc(dictionary, id, jp)(leader_skill[DESC])
     data['effects'] = []
 
@@ -559,11 +567,11 @@ def parse_leader_skill(unit_data, leader_skill, dictionary, jp=True, debug=False
             leader_skill[PROCESS_TYPE].split('@'),
             leader_skill[LS_PROCESS].split('@')):
         try:
-          process_data = parse_ls_process(process_type, process_info)
+            process_data = parse_ls_process(process_type, process_info)
         except:
-          process_data = {'error occured during parsing': str(sys.exc_info()[0]),
-                          'passive id': process_type,
-                          'passive param': process_info}
+            process_data = {'error occured during parsing': str(sys.exc_info()[0]),
+                            'passive id': process_type,
+                            'passive param': process_info}
         if debug:
             process_data['_debug id'] = process_type
             process_data['_debug params'] = process_info
@@ -571,16 +579,17 @@ def parse_leader_skill(unit_data, leader_skill, dictionary, jp=True, debug=False
             data['elements buffed'] += process_data.pop('elements buffed')
 
         data['effects'].append(process_data)
-        #data.update(process_data)
+        # data.update(process_data)
 
     return data
+
 
 def parse_fe_skill(unit_data, leader_skill, dictionary, jp=True, debug=False, id=None):
     data = dict()
 
     data['name'] = get_ls_name(dictionary, id, jp)(leader_skill[FE_NAME])
     if id != None:
-      data['id'] = id
+        data['id'] = id
     data['desc'] = get_ls_desc(dictionary, id, jp)(leader_skill[DESC])
     data['effects'] = []
     data['series'] = leader_skill[FE_SERIES]
@@ -591,11 +600,11 @@ def parse_fe_skill(unit_data, leader_skill, dictionary, jp=True, debug=False, id
             leader_skill[PROCESS_TYPE].split('@'),
             leader_skill[LS_PROCESS].split('@')):
         try:
-          process_data = parse_ls_process(process_type, process_info)
+            process_data = parse_ls_process(process_type, process_info)
         except:
-          process_data = {'error occured during parsing': str(sys.exc_info()[0]),
-                          'passive id': process_type,
-                          'passive param': process_info}
+            process_data = {'error occured during parsing': str(sys.exc_info()[0]),
+                            'passive id': process_type,
+                            'passive param': process_info}
         if debug:
             process_data['_debug id'] = process_type
             process_data['_debug params'] = process_info
@@ -603,16 +612,17 @@ def parse_fe_skill(unit_data, leader_skill, dictionary, jp=True, debug=False, id
             data['elements buffed'] += process_data.pop('elements buffed')
 
         data['effects'].append(process_data)
-        #data.update(process_data)
+        # data.update(process_data)
 
     return data
 
-def parse_extra_skill(unit_data, leader_skill, dictionary, jp=True, debug=False, id=None):
+
+def parse_extra_skill(leader_skill, dictionary, jp=True, debug=False, id=None):
     data = dict()
 
     data['name'] = get_es_name(dictionary, id, jp)(leader_skill[ES_NAME])
     if id != None:
-      data['id'] = id
+        data['id'] = id
     data['desc'] = get_es_desc(dictionary, id, jp)(leader_skill[ES_DESC])
     #data['conditions'] = []
     conditions = []
@@ -632,18 +642,20 @@ def parse_extra_skill(unit_data, leader_skill, dictionary, jp=True, debug=False,
             if splits[0] == '1' or splits[0] == '3':
                 condition['item required'] = splits[1].split(':')
             elif splits[0] == '2' or splits[0] == '4':
-                #unit condition.  if ID ends with 0, accept all units the start with the id (for various rarities)
+                # unit condition.  if ID ends with 0, accept all units the
+                # start with the id (for various rarities)
                 condition['unit required'] = splits[1]
             elif splits[0] == '5':
-                condition['sphere category required'] = item_kinds.get(splits[1], splits[1])
+                condition['sphere category required'] = item_kinds.get(
+                    splits[1], splits[1])
                 condition['sphere category required (raw)'] = splits[1]
             else:
                 condition['unknown'] = raw_condition
-            #data['conditions'].append(condition)
+            # data['conditions'].append(condition)
             multicond.append(condition)
-            #we only care about the first one for now
+            # we only care about the first one for now
         conditions.append(multicond)
-        if '#' not in term: #no support for selective/multi conditions, add many to avoid crashing
+        if '#' not in term:  # no support for selective/multi conditions, add many to avoid crashing
             conditions.append(multicond)
             conditions.append(multicond)
             conditions.append(multicond)
@@ -658,12 +670,13 @@ def parse_extra_skill(unit_data, leader_skill, dictionary, jp=True, debug=False,
             leader_skill[LS_PROCESS].split('@')):
         process_type, process_target = process_type.split(',')
         try:
-          process_data = parse_ls_process(process_type, process_info)
+            process_data = parse_ls_process(process_type, process_info)
         except:
-          process_data = {'error occured during parsing': str(sys.exc_info()[0]),
-                          'passive id': process_type,
-                          'passive param': process_info}
-        process_data['passive target'] = passive_target.get(process_target, process_target)
+            process_data = {'error occured during parsing': str(sys.exc_info()[0]),
+                            'passive id': process_type,
+                            'passive param': process_info}
+        process_data['passive target'] = passive_target.get(
+            process_target, process_target)
         if debug:
             process_data['_debug id'] = process_type
             process_data['_debug params'] = process_info
@@ -674,7 +687,7 @@ def parse_extra_skill(unit_data, leader_skill, dictionary, jp=True, debug=False,
         idx += 1
 
         data['effects'].append(process_data)
-        #data.update(process_data)
+        # data.update(process_data)
 
     if leader_skill[ES_TARGET] == '2':
         data['target'] = 'party'

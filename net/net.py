@@ -1,13 +1,13 @@
-import crypt
+from crypt import BfCrypto
 import json
 import requests
-from util import *
+from utils.util import *
 
 
 def action(action_id, body, encode_key):
     data = json.dumps({
         REQ_HEADER_TAG: {REQ_ID: action_id},
-        REQ_BODY_TAG: {REQ_BODY: crypt.encode(body, encode_key)}
+        REQ_BODY_TAG: {REQ_BODY: BfCrypto.encode(body, encode_key)}
     }, separators=(',', ':'))
 
     headers = {
@@ -26,7 +26,7 @@ def action(action_id, body, encode_key):
 
     if r.status_code == 200:
         try:
-            return crypt.decode(r.json()[REQ_BODY_TAG][REQ_BODY], encode_key)
+            return BfCrypto.decode(r.json()[REQ_BODY_TAG][REQ_BODY], encode_key)
         except:
             pass
 

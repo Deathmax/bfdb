@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from to_json import *
+from utils.to_json import *
 
 UNIT_NAME = 'utP1c0CD'
 UNIT_ELEMENT = 'iNy0ZU5M'
@@ -44,12 +44,15 @@ LS_NAME = 'dJPf9a5v'
 LS_PROCESS = '2Smu5Mtq'
 PROCESS_TYPE = 'hjAy9St3'
 DESC = 'qp37xTDh'
+
 AI_ID = '4eEVw5hL'
 AI_CHANCE = 'ug9xV4Fz'
 AI_TARGET_CONDITIONS = 'VBj9u0ot'
 AI_TARGET_TYPE = '4xctV8gF'
 AI_ACTION_PARAMS = 'Hhgi79M1'
 AI_NAME = 'L8PCsu0K'
+AI_TERM = 'q7Nit8JW'
+AI_PRIORITY = 'yu18xScw'
 
 ES_ID = 'cP83zNsv'
 ES_NAME = '0nxpBDz2'
@@ -98,6 +101,35 @@ FE_CAT_NAME = 'XLSB42ED'
 FE_TERM_SKILL = 'FHThxDv4'
 FE_TERM_COMMENT = '7XYkj2EU'
 FE_EFFECT_TYPE = 'jeR2rN3V'
+
+EVO_UNIT_ID = '74VFwuTd'
+EVO_TYPE = 'dV3qji4I'
+EVO_AMOUNT = 'Rs7bCE3t'
+EVO_MAT_IDS = ['5it4IozN',
+               'p5ZhN6Lk',
+               '5F1qmcgX',
+               'RHo1m0f6',
+               'r9SEG7tR']
+EVO_JP_MAT_TYPES = ['Xyt6rhx2',
+                    '0tna4Idu',
+                    '6GwnugW3',
+                    'hdF8ND2H',
+                    'nB7pFdR0',
+                    'IZUvR489',
+                    'bNRUuatB',
+                    '2BFgYLjg',
+                    '18Oz7z8k',
+                    'EK7jR4rB']
+EVO_JP_MAT_IDS = ['85X6JHQA',
+                  'wh3YRU08',
+                  '7MxucW2J',
+                  'j7fTS3ca',
+                  'Hb8yfmv7',
+                  'Voht18AP',
+                  '3g8brFoq',
+                  'agp4CKEV',
+                  'eKPWNoLn',
+                  'MVidsUNV']
 
 item_types = {
     '0': 'other',
@@ -201,27 +233,27 @@ buff_lookup = {
     '10': 'bc drop rate% buff',
     '11': 'item drop rate% buff',
     '12': 'angel idol effect',
-    #fire
+    # fire
     '13': 'atk% buff',
     '14': 'def% buff',
     '15': 'rec% buff',
-    #water
+    # water
     '16': 'atk% buff',
     '17': 'def% buff',
     '18': 'rec% buff',
-    #earth
+    # earth
     '19': 'atk% buff',
     '20': 'def% buff',
     '21': 'rec% buff',
-    #thunder
+    # thunder
     '22': 'atk% buff',
     '23': 'def% buff',
     '24': 'rec% buff',
-    #light
+    # light
     '25': 'atk% buff',
     '26': 'def% buff',
     '27': 'rec% buff',
-    #dark
+    # dark
     '28': 'atk% buff',
     '29': 'def% buff',
     '30': 'rec% buff',
@@ -278,9 +310,9 @@ move_speed_other = {
 }
 
 move_speed = {
-    '1': move_speed_1,      #move
-    '2': move_speed_other,  #teleport
-    '3': move_speed_other   #no move, speed correspond to no. of frames waiting in move
+    '1': move_speed_1,  # move
+    '2': move_speed_other,  # teleport
+    '3': move_speed_other  # no move, speed correspond to no. of frames waiting in move
 }
 
 animation_type = {
@@ -295,8 +327,9 @@ passive_target = {
     '2': 'party'
 }
 
+
 def crit_elem_weakness(x):
-    return float(x)*100
+    return float(x) * 100
 
 
 def damage_range(atk):
@@ -446,6 +479,8 @@ def get_item_name(dictionary, id, s, jp=True):
             return dictionary['MST_SPHERES_' + id + '_NAME']
         if 'MST_EVOITEM_' + id + '_NAME' in dictionary:
             return dictionary['MST_EVOITEM_' + id + '_NAME']
+        if 'MST_LSSPHERE_' + id + '_NAME' in dictionary:
+            return dictionary['MST_LSSPHERE_' + id + '_NAME']
         return s
 
 
@@ -461,10 +496,23 @@ def get_item_desc(dictionary, id, s, jp=True):
             return dictionary['MST_SPHERES_' + id + '_SHORTDESCRIPTION']
         if 'MST_EVOITEM_' + id + '_SHORTDESCRIPTION' in dictionary:
             return dictionary['MST_EVOITEM_' + id + '_SHORTDESCRIPTION']
+        if 'MST_LSSPHERE_' + id + '_SHORTDESCRIPTION' in dictionary:
+            return dictionary['MST_LSSPHERE_' + id + '_SHORTDESCRIPTION']
         return s
 
 
 def handle_format(fmt, obj):
+    """Applies a specified format onto an object
+
+    Args:
+        fmt: A tuple whose elements are either functions which are applied on obj, or 4-tuples with
+             the first element being indices into obj, second element being the resulting key name,
+             the third element being the value of the key, or a function that accepts the obj args
+             specified in the first element and returns a value, and the optional fourth element is
+             a predicate that accepts the obj args specified in the first element to determine
+             whether to add this key.
+        obj: An object that implements __getitem__
+    """
     import inspect
 
     data = {}
@@ -482,7 +530,7 @@ def handle_format(fmt, obj):
         if len(entry) > 3:
             predicate = entry[3]
         else:
-            predicate = lambda x: True
+            def predicate(x): return True
 
         skip = False
         for idx in indices:

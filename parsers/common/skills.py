@@ -1,5 +1,5 @@
 import sys
-from util import *
+from utils.util import *
 
 
 def parse_stat_buff(a, b, c, d):
@@ -36,7 +36,7 @@ def get_status_change_id(element, index, value):
         if (ele > 0):
             rtn += str(ind + 13)
         else:
-            rtn += str(2*ind + 1)
+            rtn += str(2 * ind + 1)
     else:
         if (ele > 0):
             rtn += str(ind + 17)
@@ -49,7 +49,8 @@ def get_bb_atk_proportional_to_hp(data):
     rtn = {}
     rtn['bb added atk% based on hp'] = int(data[1]) - int(data[0])
     add_type = int(data[2])
-    rtn['bb added atk% proportional to hp'] = ('lost' if add_type == 1 else 'remaining')
+    rtn['bb added atk% proportional to hp'] = (
+        'lost' if add_type == 1 else 'remaining')
     return rtn
 
 
@@ -68,7 +69,7 @@ skill_level_process_format = {
     '2': ((0, 'heal low', int),
           (1, 'heal high', int),
           ([2, 3], 'rec added% (from healer)',
-           lambda x, y: ((100 + float(x))*(1 + float(y)/100))/10)),
+           lambda x, y: ((100 + float(x)) * (1 + float(y) / 100)) / 10)),
 
     '3': ((0, 'gradual heal low', int),
           (1, 'gradual heal high', int),
@@ -79,10 +80,14 @@ skill_level_process_format = {
           (1, 'bb bc fill%', int, not_zero)),
 
     '5': ((0, 'element buffed', elements.get),
-          ([1, 0], lambda y, x: 'atk% buff ' + get_status_change_id(x, 0, y), int, not_zero),
-          ([2, 0], lambda y, x: 'def% buff ' + get_status_change_id(x, 1, y), int, not_zero),
-          ([3, 0], lambda y, x: 'rec% buff ' + get_status_change_id(x, 2, y), int, not_zero),
-          ([4, 0], lambda y, x: 'crit% buff ' + get_status_change_id(x, 3, y), int, not_zero),
+          ([1, 0], lambda y, x: 'atk% buff ' +
+           get_status_change_id(x, 0, y), int, not_zero),
+          ([2, 0], lambda y, x: 'def% buff ' +
+           get_status_change_id(x, 1, y), int, not_zero),
+          ([3, 0], lambda y, x: 'rec% buff ' +
+           get_status_change_id(x, 2, y), int, not_zero),
+          ([4, 0], lambda y, x: 'crit% buff ' +
+           get_status_change_id(x, 3, y), int, not_zero),
           (5, 'buff turns', int)),
 
     '6': ((0, 'bc drop rate% buff (10)', int, not_zero),
@@ -96,7 +101,7 @@ skill_level_process_format = {
     '8': ((0, 'max hp increase', int, not_zero),
           (1, 'max hp% increase', float, not_zero),),
 
-    '9': ((0, 'element buffed', elements.get),  #status change buff, again
+    '9': ((0, 'element buffed', elements.get),  # status change buff, again
           ([1, 2, 3, 0], 'buff #1', parse_stat_buff, not_zero),
           ([4, 5, 6, 0], 'buff #2', parse_stat_buff, not_zero),
           (7, 'buff turns', int)),
@@ -107,7 +112,7 @@ skill_level_process_format = {
            ([2, 3], ailments.get, second_int, not_zero),
            ([4, 5], ailments.get, second_int, not_zero),
            ([6, 7], ailments.get, second_int, not_zero)),
-    
+
     '12': ((0, 'revive to hp%', int),),
 
     '13': ((0, 'random attack', True),
@@ -163,8 +168,8 @@ skill_level_process_format = {
            (4, '% converted turns', int)),
 
     '26':  ((0, 'hit increase/hit', int),
-           (2, 'extra hits dmg%', int, not_zero),
-           (7, 'hit increase buff turns (50)', int)), 
+            (2, 'extra hits dmg%', int, not_zero),
+            (7, 'hit increase buff turns (50)', int)),
 
     '27': ((0, 'hp% damage low', int),
            (1, 'hp% damage high', int),
@@ -203,7 +208,7 @@ skill_level_process_format = {
            (3, 'bb gauge% reduction high', int),
            (4, 'bb gauge reduction chance%', float)),
 
-    #elemental weakness ala 55?
+    # elemental weakness ala 55?
 
     '36': ((0, 'invalidate LS chance%', int),
            (1, 'invalidate LS turns (60)', int),),
@@ -295,7 +300,7 @@ skill_level_process_format = {
             elements[el], True, not_zero),
            (6, 'elemental weakness multiplier%', crit_elem_weakness),
            (7, 'elemental weakness buff turns', int)),
-    
+
     '56': ((0, 'angel idol recover chance%', int, not_zero),
            (1, 'angel idol recover hp%', int, not_zero),
            (2, 'angel idol buff turns (91)', int, not_zero)),
@@ -356,6 +361,17 @@ skill_level_process_format = {
            (2, 'rec down resist% (122)', int),
            (3, 'stat down immunity buff turns', int),),
 
+    '75': ((0, 'counted element for buff multiplier', elements.get),
+           (1, 'atk% buff (1)', int, not_zero),
+           (2, 'def% buff (3)', int, not_zero),
+           (3, 'rec% buff (5)', int, not_zero),
+           (4, 'crit% buff (7)', int, not_zero),
+           (5, 'buff turns', int, not_zero)),
+
+    '76': ((0, 'max number of extra actions', int),
+           (1, 'chance% for extra action', int),
+           (2, 'extra action buff turns (123)', int)),
+
     '78': ((0, 'self atk% buff', int, not_zero),
            (1, 'self def% buff', int, not_zero),
            (2, 'self rec% buff', int, not_zero),
@@ -383,6 +399,22 @@ skill_level_process_format = {
            (1, 'spark recover hp high', int),
            (2, 'spark recover hp chance%', int),
            (3, 'spark recover hp buff turns (135)', int)),
+
+    '88': ((0, 'spark dmg inc%', int),
+           # unknown, unused params from 1-5
+           (6, 'spark dmg inc% turns (136)', int)),
+
+    '93': ((0, 'crit dmg base damage resist% (143)', int, not_zero),
+           (1, 'crit dmg buffed damage resist% (143)', int, not_zero),
+           (2, 'strong base element damage resist% (144)', int, not_zero),
+           (3, 'strong buffed element damage resist% (144)', int, not_zero),
+           (4, 'spark dmg base resist% (145)', int, not_zero),
+           (5, 'spark dmg buffed resist% (145)', int, not_zero),
+           (6, 'dmg resist turns', int)),
+
+    '94': ((0, 'aoe atk inc%', int),
+           (1, 'chance to aoe', int),
+           (6, 'aoe atk turns (142)', int)),
 
     '902': ((0, 'atk% buff (100)', int, not_zero),
             (1, 'def% buff (101)', int, not_zero),
@@ -423,7 +455,7 @@ def parse_skill_level_process(process_type, process_info, debug=False):
         process_data['_debug params'] = process_info
     if process_type in skill_level_process_format:
         process_data.update(handle_format(skill_level_process_format[process_type],
-                             process_info.split(',')))
+                                          process_info.split(',')))
         process_data['proc id'] = process_type
         return process_data
     return {'unknown proc id': process_type,
@@ -431,8 +463,8 @@ def parse_skill_level_process(process_type, process_info, debug=False):
 
 
 def parse_skill_level_processes(process_types, process_infos, start_frames, target_types, target_areas, debug=False):
-    level_data = [] 
-    index = 0;
+    level_data = []
+    index = 0
     for process_type, process_info in zip(process_types, process_infos):
         process_data = {}
         try:
@@ -442,24 +474,27 @@ def parse_skill_level_processes(process_types, process_infos, start_frames, targ
             process_data = {'error occured during parsing': str(sys.exc_info()[0]),
                             'process ids': process_types,
                             'process params': process_infos}
-        if 'elements added' in process_data and 'elements added' in level_data:
-            level_data['elements added'] += process_data.pop('elements added')
+        # if 'elements added' in process_data and 'elements added' in level_data:
+        #     level_data['elements added'] += process_data.pop('elements added')
 
-        if 'bb elements' in process_data and 'bb elements' in level_data:
-            level_data['bb elements'] += process_data.pop('bb elements')
+        # if 'bb elements' in process_data and 'bb elements' in level_data:
+        #     level_data['bb elements'] += process_data.pop('bb elements')
 
         if start_frames != None:
             try:
                 float(start_frames[index])
-                process_data['effect delay time(ms)/frame']  = str(round((float(start_frames[index])/60)*1000, 1)) + '/' + start_frames[index]
+                process_data['effect delay time(ms)/frame'] = str(
+                    round((float(start_frames[index]) / 60) * 1000, 1)) + '/' + start_frames[index]
             except:
                 pass
         try:
-            process_data['target type'] = target_type_names.get(target_types[index], target_types[index])
+            process_data['target type'] = target_type_names.get(
+                target_types[index], target_types[index])
         except:
             pass
         try:
-            process_data['target area'] = target_area_names.get(target_areas[index], target_areas[index])
+            process_data['target area'] = target_area_names.get(
+                target_areas[index], target_areas[index])
         except:
             pass
 
@@ -474,36 +509,36 @@ def parse_skill_level_processes(process_types, process_infos, start_frames, targ
     return level_data
 
 
-def parse_skill_levels(unit_data, skill_data, skill, skill_levels, debug=False):
+def parse_skill_levels(skill_data, skill, skill_levels, debug=False):
     start_frames = skill[SKILL_START_FRAME].split('@')
     skill_level_format = (
         (1, 'bc cost', bb_gauge),
 
-        (2, 'effects', 
+        (2, 'effects',
             lambda lvl: parse_skill_level_processes(
-            skill[PROCESS_TYPE].split('@'), lvl.split('@'), 
-            start_frames, skill[ITEM_TARGET_TYPE].split('@'), 
-            skill[SKILL_TARGET_AREA].split('@'), debug)),
+                skill[PROCESS_TYPE].split('@'), lvl.split('@'),
+                start_frames, skill[ITEM_TARGET_TYPE].split('@'),
+                skill[SKILL_TARGET_AREA].split('@'), debug)),
 
         # ([], 'max bc generated',
         #  lambda data: data['hits'] * int(skill[DROP_CHECK_CNT]),
         #  lambda data: 'hits' in data),
 
-        ([], 'lord damage range',
-         lambda data: dmg_str(damage_range_bb(unit_data, skill_data, data)),
-         lambda data: 'bb atk%' in data)
+        # ([], 'lord damage range',
+        #  lambda data: dmg_str(damage_range_bb(unit_data, skill_data, data)),
+        #  lambda data: 'bb atk%' in data)
     )
-    
+
     datas = [handle_format(skill_level_format, level_info.split(':'))
-            for level_info in skill_levels[SKILL_LEVELS_PROCESSES].split('|')]
+             for level_info in skill_levels[SKILL_LEVELS_PROCESSES].split('|')]
     # for i in range(0, len(datas)):
     #     if 'hits' in datas[i]['effects'][0]:
     #         datas[i]['max bc generated'] = datas[i]['effects'][0]['hits'] * int(skill[DROP_CHECK_CNT])
     return datas
 
 
-def parse_skill(unit_data, skill, skill_levels, dictionary, jp=True, debug=False, id=None):
-    atk_process_types = {'1', '14', '27', '29', '47', '61', '64'}
+def parse_skill(skill, skill_levels, dictionary, jp=True, debug=False, id=None):
+    atk_process_types = {'1', '14', '27', '29', '47', '61', '64', '75'}
 
     def get_skill_atk_frame(process_types, action_frames):
         for process_type, action_frame in zip(process_types.split('@'),
@@ -514,17 +549,21 @@ def parse_skill(unit_data, skill, skill_levels, dictionary, jp=True, debug=False
     def get_damage_frames(process_types, action_frames, start_frames):
         procList = []
         for process_type, action_frame, start_frame in zip(process_types.split('@'),
-                                                           action_frames.split('@'),
+                                                           action_frames.split(
+                                                               '@'),
                                                            start_frames.split('@')):
             data = {}
             data['proc id'] = process_type
-            data['hit dmg% distribution'] = NoIndent(hit_dmg_dist(action_frame))
+            data['hit dmg% distribution'] = NoIndent(
+                hit_dmg_dist(action_frame))
             data['frame times'] = NoIndent(frame_time_dist(action_frame))
-            data['hit dmg% distribution (total)'] = hit_dmg_dist_total(action_frame)
+            data['hit dmg% distribution (total)'] = hit_dmg_dist_total(
+                action_frame)
             data['hits'] = hits(action_frame)
             try:
                 float(start_frame)
-                data['effect delay time(ms)/frame']  = str(round((float(start_frame)/60)*1000, 1)) + '/' + start_frame
+                data['effect delay time(ms)/frame'] = str(
+                    round((float(start_frame) / 60) * 1000, 1)) + '/' + start_frame
             except:
                 pass
             procList.append(data)
@@ -555,13 +594,13 @@ def parse_skill(unit_data, skill, skill_levels, dictionary, jp=True, debug=False
                     # (DROP_CHECK_CNT, 'max bc generated',
                     #  lambda x, data: data['hits'] * int(x),
                     #  lambda x, data: 'hits' in data),
-                    
+
                     ([], 'levels', lambda data: parse_skill_levels(
-                        unit_data, data, skill, skill_levels, debug)))
+                        data, skill, skill_levels, debug)))
 
     rtn = handle_format(skill_format, skill)
     if id != None:
-      rtn['id'] = id
+        rtn['id'] = id
     if 'hit dmg% distribution' in rtn:
         rtn['hit dmg% distribution'] = NoIndent(rtn['hit dmg% distribution'])
     return rtn
