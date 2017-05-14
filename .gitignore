@@ -4,3 +4,4 @@ Ver*
 decrypt.sh
 files.txt
 notes.txt
+*.pyc
