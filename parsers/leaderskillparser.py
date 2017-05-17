@@ -25,5 +25,5 @@ class LeaderSkillParser(BaseParser):
         self.parsed_data = {}
         for ls_id in self.data['leader skill']:
             ls_data = parse_leader_skill(
-                self.data['leader skill'][ls_id], self.data['dict'], is_foreign)
+                self.data['leader skill'][ls_id], self.data['dict'], is_foreign, id=ls_id)
             self.parsed_data[ls_id] = ls_data

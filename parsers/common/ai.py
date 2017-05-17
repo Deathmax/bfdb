@@ -75,10 +75,10 @@ def parse_ai_action(ai):
 
     ai_format = ((AI_CHANCE, 'percent', float),
                  (AI_TARGET_CONDITIONS, 'target conditions', str),
-                 (AI_TARGET_TYPE, 'target type', target_type_names.get),
+                 (AI_TARGET_TYPE, 'target type', int),
                  (AI_PRIORITY, 'priority', str),
                  (AI_NAME, 'name', str),
-                 (AI_ACTION_PARAMS, 'actions', parse_action),
+                 (AI_ACTION_PARAMS, 'action', parse_action),
                  (parse_condtions))
 
     return handle_format(ai_format, ai)

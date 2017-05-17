@@ -25,5 +25,5 @@ class SkillParser(BaseParser):
         self.parsed_data = {}
         for skill_id in self.data['skill']:
             skill_data = parse_skill(
-                self.data['skill'][skill_id], self.data['skill level'][skill_id], self.data['dict'], is_foreign)
+                self.data['skill'][skill_id], self.data['skill level'][skill_id], self.data['dict'], is_foreign, id=skill_id)
             self.parsed_data[skill_id] = skill_data

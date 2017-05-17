@@ -14,7 +14,7 @@ class Config:
                 self.directory_json = x['directory_json']
                 self.dictionary_path = x['dictionary_path']
                 self.output_path = x['output_path']
-                self.cdn_url = x['cdn_url']
+                # self.cdn_url = x['cdn_url']
                 self.parsers = x['parsers']
                 self.foreign = x['foreign']
         else:
@@ -23,9 +23,9 @@ class Config:
             self.directory_json = "data/"
             self.dictionary_path = "data/dictionary_raw.txt"
             self.output_path = "../bravefrontier_data/"
-            self.cdn_url = "http://v2.cdn.android.brave.a-lim.jp/"
+            # self.cdn_url = "http://v2.cdn.android.brave.a-lim.jp/"
             self.parsers = ['skill', 'leader skill', 'extra skill', 'fe skill', 'evo',
-            'item']
+                            'item', 'ai', 'mission', 'unit']
             self.foreign = True
             self.save()
 
