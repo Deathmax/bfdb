@@ -24,8 +24,6 @@ def main():
     parser.add_argument('--config', dest='config_path', metavar="CONFIG",
                         default=Config.DEFAULT_CONFIG_PATH,
                         help='path to config file')
-    parser.add_argument('--jp', dest='is_jp', action='store_true',
-                        help='enables specific unicode handling')
 
     args = parser.parse_args()
 
