@@ -42,6 +42,6 @@ class BaseParser(object):
                               sort_keys=True,
                               indent=4,
                               cls=IndentlessEncoder,
-                              ensure_ascii=False).encode('utf8').replace('""[', '[').replace(']""', ']')
+                              ensure_ascii=False).encode('utf8').replace('\"\\\"[', '[').replace(']\\\"\"', ']')
         with open(os.path.join(os.path.normcase(directory), self.file_name), 'w+') as f:
             f.write(json_str)
