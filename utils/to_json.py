@@ -19,7 +19,7 @@ class NoIndent(object):
 class IndentlessEncoder(json.JSONEncoder):
     def encode(self, o):
         result = json.JSONEncoder.encode(self, o)
-        return result.replace('herpderp123', '"')
+        return result.replace('herpderp123', '""')
     def default(self, obj):
         return(repr(obj) if isinstance(obj, NoIndent) else
                json.JSONEncoder.default(self, obj))
