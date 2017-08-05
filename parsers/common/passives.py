@@ -645,7 +645,7 @@ def parse_extra_skill(leader_skill, dictionary, jp=True, debug=False, id=None):
                 # unit condition.  if ID ends with 0, accept all units the
                 # start with the id (for various rarities)
                 condition['unit required'] = splits[1]
-            elif splits[0] == '5':
+            elif splits[0] == '5' or splits[0] == '6':
                 condition['sphere category required'] = item_kinds.get(
                     splits[1], splits[1])
                 condition['sphere category required (raw)'] = splits[1]
