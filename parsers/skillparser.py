@@ -4,6 +4,7 @@ from parsers.baseparser import BaseParser
 from parsers.common.skills import parse_skill
 import os
 import json
+from utils.to_json import IndentlessEncoder
 
 
 class SkillParser(BaseParser):
