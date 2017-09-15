@@ -2,6 +2,8 @@
 
 from parsers.baseparser import BaseParser
 from parsers.common.skills import parse_skill
+import os
+import json
 
 
 class SkillParser(BaseParser):
