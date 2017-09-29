@@ -416,6 +416,12 @@ skill_level_process_format = {
            (1, 'chance to aoe', int),
            (6, 'aoe atk turns (142)', int)),
 
+    '132': ((0, 'crit vuln dmg%', int, not_zero),
+            (1, 'elemental vuln dmg%', int, not_zero),
+            (2, 'crit vuln chance%', float, not_zero),
+            (3, 'elemental vuln chance%', float, not_zero),
+            (4, 'vuln turns', int, not_zero)),
+
     '902': ((0, 'atk% buff (100)', int, not_zero),
             (1, 'def% buff (101)', int, not_zero),
             (2, 'rec% buff (102)', int, not_zero),
