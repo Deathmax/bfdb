@@ -508,6 +508,9 @@ ls_process_format = {
 
     '97': ((0, 'xp gained increase%', int),),
 
+    '100': ((0, 'spark crit chance%', int, not_zero),
+            (1, 'spark crit dmg%', int, not_zero)),
+
     '101': ((0, 'heal on spark low', int),
             (1, 'heal on spark high', int),
             (2, 'heal on spark%', int)),
