@@ -625,6 +625,7 @@ def parse_extra_skill(leader_skill, dictionary, jp=True, debug=False, id=None):
         data['id'] = id
     data['desc'] = get_es_desc(dictionary, id, jp)(leader_skill[ES_DESC])
     #data['conditions'] = []
+    data['rarity'] = leader_skill.get(UNIT_RARITY, "0")
     conditions = []
     data['effects'] = []
 
