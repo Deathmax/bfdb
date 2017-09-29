@@ -534,6 +534,8 @@ ls_process_format = {
              ('increase' if int(s) == 1 else 'decrease'), int),
             (7, 'turn count', int)),
 
+    '143': ((0, 'increase atk cap', int),),
+
     '10000': ((4, 'taunt turns', int),),
 
     '10001': ((4, 'stealth turns', int),),
