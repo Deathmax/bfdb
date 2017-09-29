@@ -416,6 +416,14 @@ skill_level_process_format = {
            (1, 'chance to aoe', int),
            (6, 'aoe atk turns (142)', int)),
 
+    '97': ((0, 'additional element used for attack check', lambda x: 'self only' if x == '0' else elements.get(x)),
+           (1, 'bb atk%', int, not_zero),
+           (2, 'bb flat atk', int, not_zero),
+           (3, 'bb crit%', int, not_zero),
+           (4, 'bb bc%', int, not_zero),
+           (5, 'bb hc%', int, not_zero),
+           (6, 'bb dmg%', int, not_zero),),
+
     '132': ((0, 'crit vuln dmg%', int, not_zero),
             (1, 'elemental vuln dmg%', int, not_zero),
             (2, 'crit vuln chance%', float, not_zero),
