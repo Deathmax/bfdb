@@ -547,6 +547,8 @@ ls_process_format = {
              ('increase' if int(s) == 1 else 'decrease'), int),
             (7, 'turn count', int)),
 
+    '111': ((0, 'increase skill activation in arena%', int),),
+
     '112': ((0, 'abp gain%', int, not_zero),
             (1, 'cbp gain%', int, not_zero)),
 
