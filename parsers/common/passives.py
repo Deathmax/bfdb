@@ -100,6 +100,10 @@ passivebuff_process_format = {
     '72': ((0, 'bb atk% buff', int, not_zero),
            (1, 'sbb atk% buff', int, not_zero),
            (2, 'ubb atk% buff', int, not_zero),),
+
+    '111': ((0, 'bc fill on spark low', bb_gauge),
+            (1, 'bc fill on spark high', bb_gauge),
+            (2, 'bc fill on spark%', int),),
 }
 
 ls_process_format = {
