@@ -518,6 +518,12 @@ ls_process_format = {
     '102': (([0, 1, 2, 3, 4, 5], 'elements added',
              lambda x, y, z, a, b, c: map(elements.get, filter(not_zero, [x, y, z, a, b, c]))),),
 
+    '103': ((0, 'bb atk% add', int, not_zero),
+            (1, 'sbb atk% add', int, not_zero),
+            (2, 'ubb atk% add', int, not_zero),
+            (3, 'hp threshold', int, not_zero),
+            (4, 'triggered when hp', lambda x: 'higher' if x == '1' else 'lower')),
+
     '104': ((0, 'damage% for spark', int, not_zero),
             (1, 'bc drop% for spark', int, not_zero),
             (2, 'hc drop% for spark', int, not_zero),
