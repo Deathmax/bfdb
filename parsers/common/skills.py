@@ -429,6 +429,15 @@ skill_level_process_format = {
             (2, 'od fill', int, not_zero),
             (3, 'od fill turns (148)', int)),
 
+    '130': ((0, 'atk% buff (153)', int, not_zero),
+            (1, 'def% buff (154)', int, not_zero),
+            (2, 'rec% buff (155)', int, not_zero),
+            (3, 'atk buff chance%', int, not_zero),
+            (4, 'def buff chance%', int, not_zero),
+            (5, 'rec buff chance%', int, not_zero),
+            (6, 'debuff turns', int),
+            (7, 'buff turns', int, not_zero)),
+
     '132': ((0, 'crit vuln dmg% (157)', int, not_zero),
             (1, 'elemental vuln dmg% (158)', int, not_zero),
             (2, 'crit vuln chance%', float, not_zero),
