@@ -8,10 +8,10 @@ def parse_elements_buffed(process_info):
 
     if process_info[0] != '0':
         buffs['elements buffed'] = buffs.get('elements buffed', []) + [
-            elements[process_info[0]]]
+            elements.get(process_info[0], process_info[0])]
     if process_info[1] != '0':
         buffs['elements buffed'] = buffs.get('elements buffed', []) + [
-            elements[process_info[1]]]
+            elements.get(process_info[1], process_info[1])]
 
     return buffs
 
@@ -689,12 +689,9 @@ def parse_extra_skill(leader_skill, dictionary, jp=True, debug=False, id=None):
     for process_type, process_info in zip(
             leader_skill[PROCESS_TYPE].split('@'),
             leader_skill[LS_PROCESS].split('@')):
-        process_type, process_target = process_type.split(',')
-        try:
-               process_type, process_target = process_type.split(',')
-        except:
-               print('error parsing', process_type, 'for', data['name'])
-               continue      
+        type_split = process_type.split(',')
+        process_type = type_split[0]
+        process_target = type_split[1] if len(type_split) >= 2 else ""
         try:
             process_data = parse_ls_process(process_type, process_info)
         except:

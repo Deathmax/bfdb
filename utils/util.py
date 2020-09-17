@@ -146,8 +146,6 @@ elements = {
     '4': 'thunder',
     '5': 'light',
     '6': 'dark',
-    u'闇': 'dark',
-    '闇': 'dark'
 }
 
 ailments = {
@@ -387,20 +385,20 @@ def hits(atk_frames):
 def hit_dmg_dist(atk_frames):
     if atk_frames == '0':
         return []
-    return [intTryParse(hit.split(':')[1]) for hit in atk_frames.split(',')]
-
+    return [intTryParse(hit.split(':')[1]) if len(hit.split(':')) > 1 else 0
+        for hit in atk_frames.split(',')]
 
 def frame_time_dist(atk_frames):
     if atk_frames == '0':
         return []
-    return [intTryParse(hit.split(':')[0]) for hit in atk_frames.split(',')]
-
+    return [intTryParse(hit.split(':')[0]) if len(hit.split(':')) > 1 else 0
+        for hit in atk_frames.split(',')]
 
 def hit_dmg_dist_total(atk_frames):
     if atk_frames == '0':
         return 0
-    return sum([intTryParseZero(hit.split(':')[1]) for hit in atk_frames.split(',')])
-
+    return sum([intTryParseZero(hit.split(':')[1]) if len(hit.split(':')) > 1 else 0
+        for hit in atk_frames.split(',')])
 
 def parse_imps(args):
     return {'max hp': args[0],
