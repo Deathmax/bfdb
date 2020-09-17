@@ -691,6 +691,11 @@ def parse_extra_skill(leader_skill, dictionary, jp=True, debug=False, id=None):
             leader_skill[LS_PROCESS].split('@')):
         process_type, process_target = process_type.split(',')
         try:
+               process_type, process_target = process_type.split(',')
+        except:
+               print('error parsing', process_type, 'for', data['name'])
+               continue      
+        try:
             process_data = parse_ls_process(process_type, process_info)
         except:
             process_data = {'error occured during parsing': str(sys.exc_info()[0]),

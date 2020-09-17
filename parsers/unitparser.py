@@ -238,6 +238,8 @@ def parse_unit(unit, skills, leader_skills, ais, extra_skills, unit_types, dicti
     def get_overdrive_stat(stats):
         rtn = {}
         parts = stats.split(',')
+        if len(parts) < 4:
+            return {'unknown data': stats}
         if not_zero(parts[0]):
             rtn['atk%'] = int(parts[0])
         if not_zero(parts[1]):
